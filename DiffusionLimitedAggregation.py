@@ -38,6 +38,8 @@ class Ball():
 
 		self.body = Circle(Point(x, y), self.r)
 		self.body.setWidth(1)
+		if(showMovers):
+			self.body.draw(self.win)
 
 		self.seed = randint(0, 1000) / 10
 
@@ -86,28 +88,33 @@ win = GraphWin("DLA", winX, winY, autoflush = False)
 os = OpenSimplex(randint(0, 1000))
 r = 5
 dt = 0.01
-dc = 0.0025
+dc = 0.001
+
+showMovers = 0
 
 atoms = [Ball(win, r) for i in range(150)]
 atoms[0].enable = 0
 atoms[0].moveTo(winX / 2, winY / 2)
 atoms[0].body.setFill("red")
-atoms[0].body.draw(win)
+if(showMovers == 0):
+	atoms[0].body.draw(win)
 
 t = 0
 c = 0
 while(win.isOpen()):
 	for i in range(100):
 		for atom in atoms:
-			stat = atom.update(atoms, t)
-			if(stat):
-				c += dc
-				rgb = hlsRGB(c)
-				color = color_rgb(int(rgb[0] * 255), int(rgb[1] * 255), int(rgb[2] * 255))
-				atom.body.setFill(color)
-				atom.body.draw(win)
-				atom.enable = 0
-				atoms.append(Ball(win, r))
+			if(atom.enable):
+				stat = atom.update(atoms, t)
+				if(stat):
+					c += dc
+					rgb = hlsRGB(c)
+					color = color_rgb(int(rgb[0] * 255), int(rgb[1] * 255), int(rgb[2] * 255))
+					atom.body.setFill(color)
+					if(showMovers == 0):
+						atom.body.draw(win)
+					atom.enable = 0
+					atoms.append(Ball(win, r))
 	t += dt
 
 
