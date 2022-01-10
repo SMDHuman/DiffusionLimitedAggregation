@@ -7,13 +7,17 @@ from opensimplex import OpenSimplex
 def hlsRGB(x):
 	x = x % 1
 	rgb = [0.0, 0.0, 0.0]
-	if(x < 1/2):
-		rgb[0] = 1 - x / (1/2)
-		rgb[1] = x / (1/2)
+	if(x < 1/3):
+		rgb[0] = 1 - x / (1/3)
+		rgb[1] = x / (1/3)
+
+	elif(x < 2/3):
+		rgb[1] = 1 - (x - 1/3) / (1/3)
+		rgb[2] = (x - 1/3) / (1/3)
 
 	elif(x <= 1):
-		rgb[1] = 1 - (x - 1/2) / (1/2)
-		rgb[2] = x
+		rgb[2] = 1 - (x - 2/3) / (1/3)
+		rgb[0] = (x - 2/3) / (1/3)
 	return(rgb)
 
 class Ball():
