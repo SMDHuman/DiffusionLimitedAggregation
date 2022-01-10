@@ -34,7 +34,6 @@ class Ball():
 
 		self.body = Circle(Point(x, y), self.r)
 		self.body.setWidth(1)
-		self.body.draw(self.win)
 
 		self.seed = randint(0, 1000) / 10
 
@@ -89,6 +88,7 @@ atoms = [Ball(win, r) for i in range(150)]
 atoms[0].enable = 0
 atoms[0].moveTo(winX / 2, winY / 2)
 atoms[0].body.setFill("red")
+atoms[0].body.draw(win)
 
 t = 0
 c = 0
@@ -101,6 +101,7 @@ while(win.isOpen()):
 				rgb = hlsRGB(c)
 				color = color_rgb(int(rgb[0] * 255), int(rgb[1] * 255), int(rgb[2] * 255))
 				atom.body.setFill(color)
+				atom.body.draw(win)
 				atom.enable = 0
 				atoms.append(Ball(win, r))
 	t += dt
